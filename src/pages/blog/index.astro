@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = [
+  {
+    slug: 'prepare-ac-for-summer',
+    title: 'How to Prepare Your Air Conditioner for Summer in Canoga Park',
+    description: 'Simple steps Canoga Park homeowners can take before the heat arrives to help their AC run more reliably through the season.',
+    pubDate: 'March 15, 2025'
+  },
+  {
+    slug: 'when-to-repair-or-replace-furnace',
+    title: 'Repair or Replace? Deciding What to Do When Your Furnace Fails',
+    description: 'Practical guidance for Canoga Park homeowners facing furnace repairs—how age, repair cost, and efficiency influence the decision.',
+    pubDate: 'October 8, 2025'
+  }
+];
+---
+
+<BaseLayout
+  title="HVAC Blog | Tips for Canoga Park Homeowners"
+  description="Practical heating and cooling advice for Canoga Park and San Fernando Valley homeowners. Maintenance tips, repair guidance, and seasonal preparation."
+  canonical="/blog/"
+>
+  <div class="page-header">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span> <span>Blog</span>
+      </nav>
+      <h1>HVAC Tips & Guidance</h1>
+      <p>
+        Straightforward articles to help you maintain comfort and make informed decisions about your heating and cooling systems.
+      </p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-2">
+        {posts.map(post => (
+          <article class="card">
+            <time datetime={post.pubDate} style="font-size: 0.9rem; color: var(--color-muted);">{post.pubDate}</time>
+            <h2 style="font-size: 1.25rem; margin: 8px 0 12px;">
+              <a href={`/blog/${post.slug}/`}>{post.title}</a>
+            </h2>
+            <p>{post.description}</p>
+            <a href={`/blog/${post.slug}/`}>Read article →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const phone = '(818) 704-1234';
+const phoneLink = 'tel:+18187041234';
+---
+
+<BaseLayout
+  title="About Us | Air Conditioning Repair Canoga Park CA"
+  description="Learn about our local Canoga Park HVAC team. We provide honest air conditioning repair, heating service, and system installations for San Fernando Valley homes."
+  canonical="/about/"
+>
+  <div class="page-header">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span> <span>About</span>
+      </nav>
+      <h1>About Our Canoga Park HVAC Team</h1>
+      <p>
+        We are a local heating and cooling service focused on reliable repairs, clear communication, and careful installations for homes in Canoga Park and nearby communities.
+      </p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container" style="max-width: 800px;">
+      <h2 class="section-title" style="font-size: 1.5rem;">Our Approach</h2>
+      <p style="margin-bottom: 20px; color: var(--color-muted);">
+        HVAC problems are stressful, especially in extreme weather. Our goal is to make the process as straightforward as possible: arrive on time, diagnose accurately, explain what we find in plain language, and complete approved work with attention to detail.
+      </p>
+      <p style="margin-bottom: 20px; color: var(--color-muted);">
+        We serve residential customers and light commercial properties. Whether you need a same-day repair, a seasonal tune-up, or help selecting a replacement system, we aim to provide practical recommendations based on your home’s needs and budget.
+      </p>
+
+      <h2 class="section-title" style="font-size: 1.5rem; margin-top: 40px;">What We Value</h2>
+      <div class="grid-2" style="margin-top: 24px;">
+        <div class="card">
+          <h3>Honesty</h3>
+          <p>We present findings and options clearly so you can decide without pressure.</p>
+        </div>
+        <div class="card">
+          <h3>Local Focus</h3>
+          <p>Canoga Park is our base. We know the climate and the housing stock of the western Valley.</p>
+        </div>
+        <div class="card">
+          <h3>Quality Work</h3>
+          <p>Repairs and installations follow sound practices so systems perform as expected.</p>
+        </div>
+        <div class="card">
+          <h3>Respect for Your Home</h3>
+          <p>We work cleanly, protect floors and furnishings, and leave job sites tidy.</p>
+        </div>
+      </div>
+
+      <h2 class="section-title" style="font-size: 1.5rem; margin-top: 48px;">Location</h2>
+      <p style="color: var(--color-muted); margin-bottom: 12px;">
+        7232 Canoga Ave<br />
+        Canoga Park, CA 91303<br />
+        USA
+      </p>
+      <p style="color: var(--color-muted);">
+        Phone: <a href={phoneLink}>{phone}</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Work With Us?</h2>
+      <p>Call or send a message to schedule service.</p>
+      <a href={phoneLink} class="btn btn-call" style="background: var(--color-secondary);">Call {phone}</a>
+      <p style="margin-top: 12px;"><a href="/contact/" style="color: white; text-decoration: underline;">Contact form</a></p>
+    </div>
+  </section>
+</BaseLayout>

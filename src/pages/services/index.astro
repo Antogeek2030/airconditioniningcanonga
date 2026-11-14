@@ -1,0 +1,48 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { services } from '../../data/services';
+
+const phone = '(818) 704-1234';
+const phoneLink = 'tel:+18187041234';
+---
+
+<BaseLayout
+  title="HVAC Services in Canoga Park CA | AC Repair, Heating & More"
+  description="Full list of HVAC services in Canoga Park: air conditioner repair, furnace service, installations, maintenance, ductwork, and indoor air quality solutions."
+  canonical="/services/"
+>
+  <div class="page-header">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span> <span>Services</span>
+      </nav>
+      <h1>Our HVAC Services</h1>
+      <p>
+        From emergency repairs to planned installations and seasonal maintenance, we support the heating and cooling needs of Canoga Park and nearby communities.
+      </p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-3">
+        {services.map(s => (
+          <article class="card">
+            <h2 style="font-size: 1.25rem;"><a href={`/services/${s.slug}/`}>{s.shortTitle}</a></h2>
+            <p>{s.intro.slice(0, 120)}...</p>
+            <a href={`/services/${s.slug}/`}>View service details →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Not Sure Which Service You Need?</h2>
+      <p>Describe the issue and we will help point you in the right direction.</p>
+      <a href={phoneLink} class="btn btn-call" style="background: var(--color-secondary);">Call {phone}</a>
+      <p style="margin-top: 12px;"><a href="/contact/" style="color: white; text-decoration: underline;">Or contact us online</a></p>
+    </div>
+  </section>
+</BaseLayout>

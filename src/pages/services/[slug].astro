@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { services, getServiceBySlug } from '../../data/services';
+
+export function getStaticPaths() {
+  return services.map(s => ({
+    params: { slug: s.slug },
+    props: { service: s }
+  }));
+}
+
+const { service } = Astro.props;
+const phone = '(818) 704-1234';
+const phoneLink = 'tel:+18187041234';
+const relatedServices = service.related
+  .map(slug => getServiceBySlug(slug))
+  .filter(Boolean);
+---
+
+<BaseLayout
+  title={service.metaTitle}
+  description={service.metaDescription}
+  canonical={`/services/${service.slug}/`}
+>
+  <div class="page-header">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/services/">Services</a> <span>/</span>
+        <span>{service.shortTitle}</span>
+      </nav>
+      <h1>{service.title}</h1>
+      <p>{service.intro}</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 48px;">
+        <div>
+          <h2 class="section-title" style="font-size: 1.5rem;">How Our Process Works</h2>
+          <ol class="steps">
+            {service.process.map(step => (
+              <li>
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </li>
+            ))}
+          </ol>
+
+          <div class="price-range">
+            <strong>Typical Price Range:</strong> {service.priceRange}
+          </div>
+
+          <h2 class="section-title" style="font-size: 1.5rem; margin-top: 48px;">Frequently Asked Questions</h2>
+          <div class="faq-list">
+            {service.faqs.map(faq => (
+              <div class="faq-item">
+                <h3>{faq.question}</h3>
+                <p>{faq.answer}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {relatedServices.length > 0 && (
+    <section class="section" style="background: var(--color-light);">
+      <div class="container">
+        <h2 class="section-title" style="font-size: 1.5rem;">Related Services</h2>
+        <div class="grid-3">
+          {relatedServices.map(s => s && (
+            <article class="card">
+              <h3><a href={`/services/${s.slug}/`}>{s.shortTitle}</a></h3>
+              <p>{s.intro.slice(0, 100)}...</p>
+              <a href={`/services/${s.slug}/`}>Learn more →</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Schedule {service.shortTitle}?</h2>
+      <p>Call us or request service online. We serve Canoga Park and surrounding neighborhoods.</p>
+      <a href={phoneLink} class="btn btn-call" style="background: var(--color-secondary);">Call {phone}</a>
+      <p style="margin-top: 12px;"><a href="/contact/" style="color: white; text-decoration: underline;">Request service online</a></p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const phone = '(818) 704-1234';
+const phoneLink = 'tel:+18187041234';
+// Replace with your Web3Forms access key: https://web3forms.com
+const web3formsKey = 'YOUR_WEB3FORMS_ACCESS_KEY';
+---
+
+<BaseLayout
+  title="Contact Us | Air Conditioning Repair Canoga Park CA"
+  description="Contact our Canoga Park HVAC team for AC repair, heating service, or a free estimate. Call (818) 704-1234 or use the online form."
+  canonical="/contact/"
+>
+  <div class="page-header">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span> <span>Contact</span>
+      </nav>
+      <h1>Contact Us</h1>
+      <p>
+        Call for the fastest response, or send a message using the form below. We serve Canoga Park and surrounding neighborhoods.
+      </p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-2" style="align-items: start;">
+        <div>
+          <h2 class="section-title" style="font-size: 1.35rem;">Get in Touch</h2>
+          <p style="margin-bottom: 20px; color: var(--color-muted);">
+            <strong>Phone:</strong> <a href={phoneLink}>{phone}</a><br />
+            <strong>Email:</strong> <a href="mailto:info@airconditioningrepaircanongaparkca.us">info@airconditioningrepaircanongaparkca.us</a><br />
+            <strong>Address:</strong> 7232 Canoga Ave, Canoga Park, CA 91303, USA
+          </p>
+          <p style="color: var(--color-muted); margin-bottom: 24px;">
+            For urgent no-heat or no-cool situations, calling is the best way to reach us quickly.
+          </p>
+          <a href={phoneLink} class="btn btn-call">Call {phone}</a>
+        </div>
+
+        <div>
+          <h2 class="section-title" style="font-size: 1.35rem;">Service Request Form</h2>
+          <div id="form-success" class="form-success" style="display: none;" role="status">
+            <p><strong>Thank you!</strong> Your message has been sent. We will respond as soon as possible.</p>
+          </div>
+          <form
+            id="contact-form"
+            action="https://api.web3forms.com/submit"
+            method="POST"
+            aria-label="Contact form"
+          >
+            <input type="hidden" name="access_key" value={web3formsKey} />
+            <input type="hidden" name="subject" value="New Service Request - Canoga Park HVAC" />
+            <input type="hidden" name="from_name" value="Canoga Park HVAC Website" />
+            <input type="checkbox" name="botcheck" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+            <div class="form-group">
+              <label for="name">Name <span aria-hidden="true">*</span></label>
+              <input type="text" id="name" name="name" required autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone <span aria-hidden="true">*</span></label>
+              <input type="tel" id="phone" name="phone" required autocomplete="tel" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" autocomplete="email" />
+            </div>
+            <div class="form-group">
+              <label for="service">Service Needed</label>
+              <select id="service" name="service">
+                <option value="">Select a service...</option>
+                <option value="AC Repair">AC Repair</option>
+                <option value="AC Installation">AC Installation</option>
+                <option value="Furnace Repair">Furnace Repair</option>
+                <option value="Furnace Installation">Furnace Installation</option>
+                <option value="Heat Pump">Heat Pump Service</option>
+                <option value="Maintenance">Maintenance / Tune-Up</option>
+                <option value="Emergency">Emergency Service</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Message <span aria-hidden="true">*</span></label>
+              <textarea id="message" name="message" required placeholder="Describe the issue or request..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const success = document.getElementById('form-success');
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+
+    if (form) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!submitBtn) return;
+
+        const accessKey = (form.querySelector('input[name="access_key"]') as HTMLInputElement)?.value;
+        if (!accessKey || accessKey === 'YOUR_WEB3FORMS_ACCESS_KEY') {
+          alert('Please configure your Web3Forms access key in contact.astro before deploying.');
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+
+        try {
+          const formData = new FormData(form);
+          const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData
+          });
+          const result = await response.json();
+
+          if (result.success) {
+            form.style.display = 'none';
+            if (success) success.style.display = 'block';
+          } else {
+            alert(result.message || 'Something went wrong. Please try again or call us.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Send Message';
+          }
+        } catch (err) {
+          alert('Unable to send. Please call us directly.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Send Message';
+        }
+      });
+    }
+  </script>
+</BaseLayout>

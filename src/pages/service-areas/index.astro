@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { areas } from '../../data/areas';
+
+const phone = '(818) 704-1234';
+const phoneLink = 'tel:+18187041234';
+---
+
+<BaseLayout
+  title="HVAC Service Areas | Canoga Park & Nearby Communities"
+  description="We provide air conditioning repair and HVAC services in Canoga Park, Winnetka, Reseda, Chatsworth, Northridge, Woodland Hills, and surrounding San Fernando Valley neighborhoods."
+  canonical="/service-areas/"
+>
+  <div class="page-header">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span> <span>Service Areas</span>
+      </nav>
+      <h1>Areas We Serve</h1>
+      <p>
+        Based in Canoga Park, we regularly serve homes and light commercial properties across the western San Fernando Valley.
+      </p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="grid-3">
+        {areas.map(a => (
+          <article class="card">
+            <h2 style="font-size: 1.25rem;"><a href={`/service-areas/${a.slug}/`}>{a.name}</a></h2>
+            <p>{a.intro.slice(0, 130)}...</p>
+            <a href={`/service-areas/${a.slug}/`}>Service details for {a.name} →</a>
+          </article>
+        ))}
+      </div>
+      <p class="mt-4" style="color: var(--color-muted);">
+        Don’t see your neighborhood listed? Call us—we often serve additional nearby communities.
+      </p>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Need Service in Your Neighborhood?</h2>
+      <p>Reach out and we will confirm availability for your location.</p>
+      <a href={phoneLink} class="btn btn-call" style="background: var(--color-secondary);">Call {phone}</a>
+    </div>
+  </section>
+</BaseLayout>

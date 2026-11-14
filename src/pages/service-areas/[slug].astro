@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { areas } from '../../data/areas';
+import { services } from '../../data/services';
+
+export function getStaticPaths() {
+  return areas.map(a => ({
+    params: { slug: a.slug },
+    props: { area: a }
+  }));
+}
+
+const { area } = Astro.props;
+const phone = '(818) 704-1234';
+const phoneLink = 'tel:+18187041234';
+const popularServices = services.slice(0, 8);
+---
+
+<BaseLayout
+  title={area.metaTitle}
+  description={area.metaDescription}
+  canonical={`/service-areas/${area.slug}/`}
+>
+  <div class="page-header">
+    <div class="container">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a> <span>/</span>
+        <a href="/service-areas/">Service Areas</a> <span>/</span>
+        <span>{area.name}</span>
+      </nav>
+      <h1>HVAC Services in {area.name}</h1>
+      <p>{area.intro}</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title" style="font-size: 1.5rem;">What We Offer in {area.name}</h2>
+      <ul style="list-style: disc; padding-left: 24px; margin-bottom: 32px; color: var(--color-muted);">
+        {area.highlights.map(h => (
+          <li style="margin-bottom: 8px;">{h}</li>
+        ))}
+      </ul>
+
+      <h2 class="section-title" style="font-size: 1.5rem;">Popular Services</h2>
+      <div class="grid-3">
+        {popularServices.map(s => (
+          <article class="card">
+            <h3><a href={`/services/${s.slug}/`}>{s.shortTitle}</a></h3>
+            <p>{s.intro.slice(0, 90)}...</p>
+            <a href={`/services/${s.slug}/`}>Details →</a>
+          </article>
+        ))}
+      </div>
+      <p class="mt-4">
+        <a href="/services/" class="btn btn-outline">View all services</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Schedule Service in {area.name}</h2>
+      <p>Call or send a request. We are familiar with homes throughout the area.</p>
+      <a href={phoneLink} class="btn btn-call" style="background: var(--color-secondary);">Call {phone}</a>
+      <p style="margin-top: 12px;"><a href="/contact/" style="color: white; text-decoration: underline;">Contact form</a></p>
+    </div>
+  </section>
+</BaseLayout>

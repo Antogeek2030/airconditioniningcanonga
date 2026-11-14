@@ -1,0 +1,27 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Page Not Found"
+  description="The page you requested could not be found. Return to our Canoga Park HVAC homepage or browse our services."
+  canonical="/404/"
+  noindex={true}
+>
+  <section class="section" style="text-align: center; padding: 80px 20px;">
+    <div class="container">
+      <h1 style="font-size: 3rem; margin-bottom: 16px;">404</h1>
+      <p style="font-size: 1.25rem; margin-bottom: 24px; color: var(--color-muted);">
+        Sorry, we could not find that page.
+      </p>
+      <p style="margin-bottom: 32px;">
+        It may have been moved or the link might be incorrect.
+      </p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="/" class="btn btn-primary">Go to Homepage</a>
+        <a href="/services/" class="btn btn-outline">View Services</a>
+        <a href="/contact/" class="btn btn-outline">Contact Us</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
